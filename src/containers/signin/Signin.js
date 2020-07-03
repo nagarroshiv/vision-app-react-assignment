@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { signInAction } from './action/index';
 
-const Signin = () => {
+const Signin = (props) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
 	const [ emailError, setEmailError ] = useState(false);
 	const [ passwordError, setPasswordError ] = useState(false);
+
+	// REDUX
+	const dispatch = useDispatch();
+
+	// REDUX STATE
+	const signinData = useSelector((state) => state.signin);
+
+	if (signinData.loggedIn) {
+		props.history.push('/')
+	}	
 
 	const resetForm = (type) => {
 		if (type === 'all') {
@@ -17,10 +29,10 @@ const Signin = () => {
 	};
 
 	const onSubmit = (event) => {
-        event.preventDefault();
-        
-        // reset validation
-        resetForm()
+		event.preventDefault();
+
+		// reset validation
+		resetForm();
 
 		// Validation
 		if (!email) {
@@ -34,7 +46,13 @@ const Signin = () => {
 		if (!email || !password) {
 			return;
 		} else {
-			console.log('api call');
+			const requestBody = {
+				user: {
+					email,
+					password
+				}
+			};
+			dispatch(signInAction(requestBody));
 		}
 	};
 
@@ -58,6 +76,7 @@ const Signin = () => {
 							placeholder="Password"
 							className="form-control"
 							value={password}
+							type="password"
 							onChange={(event) => setPassword(event.target.value)}
 						/>
 						{passwordError && (
@@ -69,6 +88,9 @@ const Signin = () => {
 					</p>
 					<div className="text-center">
 						<input type="submit" />
+					</div>
+					<div className="text-danger">
+						{signinData.signinErrorMessage}
 					</div>
 				</form>
 			</div>
