@@ -7,7 +7,7 @@ export const API_BASE_URL = 'https://conduit.productionready.io'
 export const jsonApiHeader = (accessToken, ContentType) => {
     return {
         'Content-Type': ContentType,
-        'Authorization': accessToken ? `Bearer ${accessToken}` : ''
+        'Authorization': accessToken ? `Token ${accessToken}` : ''
     };
 };
 

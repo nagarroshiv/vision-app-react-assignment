@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signInAction } from './action/index';
+import { PRIMARY, WHITESMOKE } from '../../utils/colorConstants';
 
 const Signin = (props) => {
 	const [ email, setEmail ] = useState('');
@@ -16,8 +17,8 @@ const Signin = (props) => {
 	const signinData = useSelector((state) => state.signin);
 
 	if (signinData.loggedIn) {
-		props.history.push('/')
-	}	
+		props.history.push('/');
+	}
 
 	const resetForm = (type) => {
 		if (type === 'all') {
@@ -87,11 +88,14 @@ const Signin = (props) => {
 						Need an account? <Link to="/signup">Signup</Link> | <Link to="/">Home</Link>
 					</p>
 					<div className="text-center">
-						<input type="submit" />
+						<input
+							type="submit"
+							className="btn"
+							value="Sign in"
+							style={{ backgroundColor: PRIMARY, color: WHITESMOKE }}
+						/>
 					</div>
-					<div className="text-danger">
-						{signinData.signinErrorMessage}
-					</div>
+					<div className="text-danger">{signinData.signinErrorMessage}</div>
 				</form>
 			</div>
 		</div>

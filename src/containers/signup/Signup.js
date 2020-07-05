@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { PRIMARY, WHITESMOKE } from '../../utils/colorConstants';
 
 const Signup = () => {
 	const [ userName, setUserName ] = useState('');
@@ -87,7 +88,12 @@ const Signup = () => {
 						Already have an account? <Link to="/signin">Signin</Link> | <Link to="/">Home</Link>
 					</p>
 					<div className="text-center">
-						<input type="submit" />
+						<input
+							type="submit"
+							className="btn"
+							value="Sign up"
+							style={{ backgroundColor: PRIMARY, color: WHITESMOKE }}
+						/>
 					</div>
 				</form>
 			</div>

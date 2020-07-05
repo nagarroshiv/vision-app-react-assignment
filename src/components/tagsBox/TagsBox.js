@@ -1,10 +1,21 @@
 import React from 'react';
+import { SECONDARY, PRIMARY, WHITESMOKE } from '../../utils/colorConstants';
 
-const TagsBox = ({ tags }) => {
+const TagsBox = ({ tags, loading }) => {
 	return (
-		<div style={{ backgroundColor: 'lightgrey', borderRadius: '3px' }} className="p-2">
+		<div style={{ backgroundColor: SECONDARY, borderRadius: '3px' }} className="p-2">
 			<h5>Popular Tags</h5>
-			{tags.map((tag) => <span class="badge badge-pill badge-info mx-1">{tag.toUpperCase()}</span>)}
+			{loading && <small>Loading ...</small>}
+			{!loading && tags.length === 0 ? 'No tags available' : null}
+			{tags.map((tag, index) => (
+				<span
+					className="badge badge-pill mx-1"
+					style={{ backgroundColor: PRIMARY, color: WHITESMOKE }}
+					key={index}
+				>
+					{tag.toUpperCase()}
+				</span>
+			))}
 		</div>
 	);
 };
