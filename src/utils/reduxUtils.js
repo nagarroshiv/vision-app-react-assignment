@@ -12,7 +12,7 @@ export const jsonApiHeader = (accessToken, ContentType) => {
 };
 
 export const getAccessTokenFromLocalStorage = () => {
-    return localStorage.getItem('token')
+    return localStorage.getItem('jwtToken')
 }
 
 export function createRequestActionTypes(base) {

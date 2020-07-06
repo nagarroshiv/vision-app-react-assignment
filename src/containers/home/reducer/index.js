@@ -4,7 +4,8 @@ const initialState = {
 	loadingTag: false,
 	tags: [],
 	loadingArticles: false,
-	articles: []
+	articles: [],
+	favoriteInProcess: false
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -44,6 +45,21 @@ export default (state = initialState, { type, payload }) => {
 				...state,
 				loadingArticles: false,
 				articles: []
+			};
+		case homeActionTypes.favoriteArticle.REQUEST:
+			return {
+				...state,
+				favoriteInProcess: true
+			};
+		case homeActionTypes.favoriteArticle.SUCCESS:
+			return {
+				...state,
+				favoriteInProcess: false
+			};
+		case homeActionTypes.favoriteArticle.FAILURE:
+			return {
+				...state,
+				favoriteInProcess: false
 			};
 		default:
 			return state;

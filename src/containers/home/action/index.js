@@ -1,5 +1,11 @@
 import { actionCreator, jsonApiHeader, getAccessTokenFromLocalStorage } from '../../../utils/reduxUtils';
-import { homeActionTypes, TAGS_API_URL, ARTICLES_API_URL } from '../constants';
+import {
+	homeActionTypes,
+	TAGS_API_URL,
+	ARTICLES_API_URL,
+	FAVORITE_ARTICLE_API_URL_START,
+	FAVORITE_ARTICLE_API_URL_END
+} from '../constants';
 import axios from 'axios';
 
 export const getTagsAction = () => {
@@ -30,6 +36,26 @@ export const getArticles = (limit, offset) => {
 			})
 			.catch((error) => {
 				dispatch(actionCreator(homeActionTypes.articles.FAILURE));
+			});
+	};
+};
+
+export const favoriteArticle = (slug) => {
+	return (dispatch) => {
+		dispatch(actionCreator(homeActionTypes.favoriteArticle.REQUEST));
+		axios
+			.post(
+				`${FAVORITE_ARTICLE_API_URL_START}${slug}${FAVORITE_ARTICLE_API_URL_END}`,
+				{},
+				{
+					headers: jsonApiHeader(getAccessTokenFromLocalStorage(), 'application/json')
+				}
+			)
+			.then((response) => {
+				console.log(response);
+			})
+			.catch((error) => {
+				console.log(error);
 			});
 	};
 };

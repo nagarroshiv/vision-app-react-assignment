@@ -1,4 +1,4 @@
-import { signinActionTypes, SIGNIN_API_URL } from '../constants';
+import { signinActionTypes, SIGNIN_API_URL, USER_DETAIL_API_URL } from '../constants';
 import { actionCreator, jsonApiHeader, getAccessTokenFromLocalStorage } from '../../../utils/reduxUtils';
 import axios from 'axios';
 
@@ -10,7 +10,7 @@ export const signInAction = (data) => {
 				headers: jsonApiHeader(getAccessTokenFromLocalStorage(), 'application/json')
 			})
 			.then((response) => {
-                console.log(response.data.user)
+				localStorage.setItem('jwtToken', response.data.user.token)
 				dispatch(actionCreator(signinActionTypes.signin.SUCCESS, response.data.user));
 			})
 			.catch((error) => {
@@ -19,3 +19,21 @@ export const signInAction = (data) => {
 			});
 	};
 };
+
+export const getUserDetailAction = () => {
+	return (dispatch) => {
+		dispatch(actionCreator(signinActionTypes.userDetail.REQUEST));
+		axios
+			.get(USER_DETAIL_API_URL, {
+				headers: jsonApiHeader(getAccessTokenFromLocalStorage(), 'application/json')
+			})
+			.then((response) => {
+				dispatch(actionCreator(signinActionTypes.userDetail.SUCCESS, response.data.user));
+			})
+			.catch((error) => {
+				dispatch(actionCreator(signinActionTypes.userDetail.FAILURE));
+			});
+	};
+};
+
+
