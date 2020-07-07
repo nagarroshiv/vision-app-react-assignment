@@ -40,7 +40,7 @@ export const getArticles = (limit, offset) => {
 	};
 };
 
-export const favoriteArticle = (slug) => {
+export const addToFavoriteArticle = (slug) => {
 	return (dispatch) => {
 		dispatch(actionCreator(homeActionTypes.favoriteArticle.REQUEST));
 		axios
@@ -53,9 +53,26 @@ export const favoriteArticle = (slug) => {
 			)
 			.then((response) => {
 				console.log(response);
+				dispatch(actionCreator(homeActionTypes.favoriteArticle.SUCCESS));
 			})
 			.catch((error) => {
-				console.log(error);
+				dispatch(actionCreator(homeActionTypes.favoriteArticle.FAILURE));
+			});
+	};
+};
+
+export const removeFromFavoriteArticle = (slug) => {
+	return (dispatch) => {
+		dispatch(actionCreator(homeActionTypes.favoriteArticle.REQUEST));
+		axios
+			.delete(`${FAVORITE_ARTICLE_API_URL_START}${slug}${FAVORITE_ARTICLE_API_URL_END}`, {
+				headers: jsonApiHeader(getAccessTokenFromLocalStorage(), 'application/json')
+			})
+			.then((response) => {
+				dispatch(actionCreator(homeActionTypes.favoriteArticle.SUCCESS));
+			})
+			.catch((error) => {
+				dispatch(actionCreator(homeActionTypes.favoriteArticle.FAILURE));
 			});
 	};
 };

@@ -1,7 +1,8 @@
 import { createArticleActionTypes } from '../constants';
 
 const initialState = {
-	loadingCreateArticle: false
+	loadingCreateArticle: false,
+	article: {}
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -14,7 +15,8 @@ export default (state = initialState, { type, payload }) => {
 		case createArticleActionTypes.createArticle.SUCCESS:
 			return {
 				...state,
-				loadingCreateArticle: false
+				loadingCreateArticle: false,
+				article: payload
 			};
 		case createArticleActionTypes.createArticle.FAILURE:
 			return {

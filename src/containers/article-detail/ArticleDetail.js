@@ -15,8 +15,6 @@ const ArticleDetail = (props) => {
 		dispatch(getArticleDetailAction(articleId));
 	}, []);
 
-	console.log(article, article);
-
 	return (
 		<div>
 			<Header />

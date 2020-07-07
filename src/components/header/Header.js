@@ -11,8 +11,6 @@ const Header = () => {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.signin.user);
 
-	console.log('user', user) 
-
 	useEffect(() => {
 		dispatch(getUserDetailAction());
 	}, []);
@@ -74,20 +72,20 @@ const Header = () => {
 					)}
 					{loggedIn && (
 						<li className="nav-item">
-							<Link className="nav-link" onClick={logout}>
+							<Link className="nav-link" onClick={logout} to={false}>
 								<svg
 									width="1em"
 									height="1em"
 									viewBox="0 0 16 16"
-									class="bi bi-power"
+									className="bi bi-power"
 									fill="currentColor"
 									xmlns="http://www.w3.org/2000/svg"
 								>
 									<path
-										fill-rule="evenodd"
+										fillRule="evenodd"
 										d="M5.578 4.437a5 5 0 1 0 4.922.044l.5-.866a6 6 0 1 1-5.908-.053l.486.875z"
 									/>
-									<path fill-rule="evenodd" d="M7.5 8V1h1v7h-1z" />
+									<path fillRule="evenodd" d="M7.5 8V1h1v7h-1z" />
 								</svg>{' '}
 								Logout
 							</Link>

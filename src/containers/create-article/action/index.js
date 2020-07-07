@@ -10,7 +10,7 @@ export const createArticleAction = (form_data) => {
 				headers: jsonApiHeader(getAccessTokenFromLocalStorage(), 'application/json')
 			})
 			.then((response) => {
-				dispatch(actionCreator(createArticleActionTypes.createArticle.SUCCESS));
+				dispatch(actionCreator(createArticleActionTypes.createArticle.SUCCESS, response.data.article));
 			})
 			.catch((error) => {
 				dispatch(actionCreator(createArticleActionTypes.createArticle.FAILURE));
