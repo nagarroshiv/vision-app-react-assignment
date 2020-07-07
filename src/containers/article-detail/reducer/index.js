@@ -2,7 +2,10 @@ import { articleDetailActionTypes } from '../constants';
 
 const initialState = {
 	loadingArticle: false,
-	article: {}
+	article: {},
+	loadingComments: false,
+	comments: [],
+	deletingComment: false
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -24,6 +27,33 @@ export default (state = initialState, { type, payload }) => {
 				...state,
 				loadingArticle: false,
 				article: []
+			};
+		case articleDetailActionTypes.article_comments.SUCCESS:
+			return {
+				...state,
+				loadingComments: false,
+				comments: payload
+			};
+		case articleDetailActionTypes.article_comments.FAILURE:
+			return {
+				...state,
+				loadingComments: false,
+				comments: []
+			};
+		case articleDetailActionTypes.delete_comments.REQUEST:
+			return {
+				...state,
+				deletingComment: true
+			};
+		case articleDetailActionTypes.delete_comments.SUCCESS:
+			return {
+				...state,
+				deletingComment: false
+			};
+		case articleDetailActionTypes.delete_comments.FAILURE:
+			return {
+				...state,
+				deletingComment: false
 			};
 		default:
 			return state;

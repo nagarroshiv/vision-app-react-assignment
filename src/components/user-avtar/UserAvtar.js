@@ -13,8 +13,8 @@ const UserAvtar = ({ image, username, createdAt }) => {
 			<img
 				src={image ? image : defaultUser}
 				alt="user avtar"
-				height={50}
-				width={50}
+				height={30}
+				width={30}
 				style={{ borderRadius: '25px' }}
 			/>
 			<span className="ml-2" style={{ color: PRIMARY }}>
