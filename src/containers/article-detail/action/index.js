@@ -5,7 +5,10 @@ import {
 	ARTICLE_COMMENTS_API_URL_START,
 	ARTICLE_COMMENTS_API_URL_END,
 	DELETE_ARTICLE_COMMENT_API_URL_START,
-	DELETE_ARTICLE_COMMENT_API_URL_END
+	DELETE_ARTICLE_COMMENT_API_URL_END,
+	CREATE_ARTICLE_COMMENT_API_URL_START,
+	CREATE_ARTICLE_COMMENT_API_URL_END,
+	DELETE_ARTICLE_API_URL
 } from '../constants';
 import axios from 'axios';
 import { act } from 'react-dom/test-utils';
@@ -56,6 +59,42 @@ export const deleteCommentAction = (articleId, commentId) => {
 			})
 			.catch((error) => {
 				dispatch(actionCreator(articleDetailActionTypes.delete_comments.FAILURE));
+			});
+	};
+};
+
+export const createCommentAction = (articleId, requestBody) => {
+	return (dispatch) => {
+		dispatch(actionCreator(articleDetailActionTypes.create_comment.REQUEST));
+		axios
+			.post(
+				`${CREATE_ARTICLE_COMMENT_API_URL_START}${articleId}${CREATE_ARTICLE_COMMENT_API_URL_END}`,
+				requestBody,
+				{
+					headers: jsonApiHeader(getAccessTokenFromLocalStorage(), 'application/json')
+				}
+			)
+			.then((response) => {
+				dispatch(actionCreator(articleDetailActionTypes.create_comment.SUCCESS));
+			})
+			.catch((error) => {
+				dispatch(actionCreator(articleDetailActionTypes.create_comment.FAILURE));
+			});
+	};
+};
+
+export const deleteArticleAction = (articleId) => {
+	return (dispatch) => {
+		dispatch(actionCreator(articleDetailActionTypes.delete_article.REQUEST));
+		axios
+			.delete(`${DELETE_ARTICLE_API_URL}${articleId}`, {
+				headers: jsonApiHeader(getAccessTokenFromLocalStorage(), 'application/json')
+			})
+			.then((response) => {
+				dispatch(actionCreator(articleDetailActionTypes.delete_article.SUCCESS));
+			})
+			.catch((error) => {
+				dispatch(actionCreator(articleDetailActionTypes.delete_article.FAILURE));
 			});
 	};
 };

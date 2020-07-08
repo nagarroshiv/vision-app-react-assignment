@@ -1,11 +1,13 @@
 import { articleDetailActionTypes } from '../constants';
 
 const initialState = {
+	deletingArticle: false,
 	loadingArticle: false,
 	article: {},
 	loadingComments: false,
 	comments: [],
-	deletingComment: false
+	deletingComment: false,
+	creatingComment: false
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -54,6 +56,36 @@ export default (state = initialState, { type, payload }) => {
 			return {
 				...state,
 				deletingComment: false
+			};
+		case articleDetailActionTypes.create_comment.REQUEST:
+			return {
+				...state,
+				creatingComment: true
+			};
+		case articleDetailActionTypes.create_comment.SUCCESS:
+			return {
+				...state,
+				creatingComment: false
+			};
+		case articleDetailActionTypes.create_comment.FAILURE:
+			return {
+				...state,
+				creatingComment: false
+			};
+		case articleDetailActionTypes.delete_article.REQUEST:
+			return {
+				...state,
+				deletingArticle: true
+			};
+		case articleDetailActionTypes.delete_article.SUCCESS:
+			return {
+				...state,
+				deletingArticle: false
+			};
+		case articleDetailActionTypes.delete_article.FAILURE:
+			return {
+				...state,
+				deletingArticle: false
 			};
 		default:
 			return state;

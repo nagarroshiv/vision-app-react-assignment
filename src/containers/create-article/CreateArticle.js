@@ -13,6 +13,7 @@ const CreateArticle = ({ history }) => {
 
 	const dispatch = useDispatch();
 	const article = useSelector((state) => state.createArticle.article);
+	const loadingCreateArticle = useSelector((state) => state.createArticle.loadingCreateArticle);
 
 	if (article.slug) {
 		history.push(`/detail/${article.slug}`);
@@ -64,6 +65,7 @@ const CreateArticle = ({ history }) => {
 								className="form-control"
 								placeholder="Article Title"
 								value={title}
+								disabled={loadingCreateArticle}
 								onChange={(event) => setTitle(event.target.value)}
 							/>
 						</div>
@@ -73,6 +75,7 @@ const CreateArticle = ({ history }) => {
 								className="form-control"
 								placeholder="What's the article about?"
 								value={shortDescription}
+								disabled={loadingCreateArticle}
 								onChange={(event) => setShortDescription(event.target.value)}
 							/>
 						</div>
@@ -84,6 +87,7 @@ const CreateArticle = ({ history }) => {
 								rows="5"
 								style={{ resize: 'none' }}
 								value={description}
+								disabled={loadingCreateArticle}
 								onChange={(event) => setDescription(event.target.value)}
 							/>
 						</div>
@@ -94,12 +98,17 @@ const CreateArticle = ({ history }) => {
 								className="form-control"
 								placeholder="Article Tags (comma separated)"
 								value={tags}
+								disabled={loadingCreateArticle}
 								onChange={(event) => setTags(event.target.value)}
 							/>
 						</div>
 						<p className="text-danger">{errorMessage}</p>
 						<div className="text-right">
-							<button className="btn" style={{ backgroundColor: PRIMARY, color: WHITESMOKE }}>
+							<button
+								disabled={loadingCreateArticle}
+								className="btn"
+								style={{ backgroundColor: PRIMARY, color: WHITESMOKE }}
+							>
 								Create Article
 							</button>
 						</div>
