@@ -8,6 +8,7 @@ import ArticleDetail from './containers/article-detail/ArticleDetail';
 import Signin from './containers/signin/Signin';
 import Signup from './containers/signup/Signup';
 import CreateArticle from './containers/create-article/CreateArticle';
+import Account from './containers/account/Account';
 
 function App() {
 	return (
@@ -17,6 +18,7 @@ function App() {
 			<Route path="/signin" exact component={Signin} />
 			<Route path="/signup" exact component={Signup} />
 			<Route path="/create" exact component={CreateArticle} />
+			<Route path="/account" exact component={Account} />
 		</BrowserRouter>
 	);
 }

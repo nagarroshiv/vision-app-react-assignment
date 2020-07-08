@@ -11,7 +11,8 @@ const Home = ({ history }) => {
 	const tags = useSelector((state) => state.home.tags);
 	const loadingTag = useSelector((state) => state.home.loadingTag);
 	const articles = useSelector((state) => state.home.articles);
-	const favoriteInProcess = useSelector((state) => state.home.favoriteInProcess)
+	const favoriteInProcess = useSelector((state) => state.home.favoriteInProcess);
+
 
 	useEffect(() => {
 		dispatch(getTagsAction());

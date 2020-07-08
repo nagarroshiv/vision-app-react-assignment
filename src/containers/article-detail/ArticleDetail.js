@@ -39,14 +39,13 @@ const ArticleDetail = (props) => {
 
 	const isInitialMount = useRef(true);
 
-
 	useEffect(
 		() => {
 			if (isInitialMount.current) {
 				isInitialMount.current = false;
 			} else {
 				if (!deletingArticle) {
-					props.history.push('/')
+					props.history.push('/');
 				}
 			}
 		},
@@ -84,6 +83,10 @@ const ArticleDetail = (props) => {
 									className="bi bi-pen"
 									fill={PRIMARY}
 									xmlns="http://www.w3.org/2000/svg"
+									style={{ cursor: 'pointer' }}
+									onClick={() => {
+										alert('WIP');
+									}}
 								>
 									<path
 										fillRule="evenodd"
