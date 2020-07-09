@@ -58,6 +58,9 @@ const CreateArticle = ({ history }) => {
 			<Header />
 			<div className="container">
 				<div className="pt-5 mx-auto" style={{ maxWidth: '500px' }}>
+					<div className="text-center">
+						<h3>Create Article</h3>
+					</div>
 					<form method="post" onSubmit={createArticle}>
 						<div className="form-group">
 							<input

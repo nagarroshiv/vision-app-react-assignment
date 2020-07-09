@@ -6,7 +6,8 @@ const initialState = {
 	loadingUserArticles: false,
 	userArticles: [],
 	loadingFavortieArticles: false,
-	favroriteArticles: []
+	favroriteArticles: [],
+	updatingProfile: false
 };
 
 export default (state = initialState, { type, payload }) => {
@@ -15,7 +16,7 @@ export default (state = initialState, { type, payload }) => {
 			return {
 				...state,
 				loadingProfile: true,
-				user: {}
+				// user: {}
 			};
 		case userProfileActionTypes.user_profile.SUCCESS:
 			return {
@@ -64,6 +65,21 @@ export default (state = initialState, { type, payload }) => {
 				...state,
 				loadingFavortieArticles: false,
 				favroriteArticles: []
+			};
+		case userProfileActionTypes.update_profile.REQUEST:
+			return {
+				...state,
+				updatingProfile: true
+			};
+		case userProfileActionTypes.update_profile.SUCCESS:
+			return {
+				...state,
+				updatingProfile: false
+			};
+		case userProfileActionTypes.update_profile.FAILURE:
+			return {
+				...state,
+				updatingProfile: false
 			};
 		default:
 			return state;

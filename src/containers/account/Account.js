@@ -1,23 +1,70 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import Modal from 'react-modal';
 import Header from '../../components/header/Header';
-import { SECONDARY, PRIMARY } from '../../utils/colorConstants';
+import { SECONDARY, PRIMARY, WHITESMOKE } from '../../utils/colorConstants';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserProfileAction, getUserArticlesAction, getUserFavoriteArticlesAction } from './action';
+import {
+	getUserProfileAction,
+	getUserArticlesAction,
+	getUserFavoriteArticlesAction,
+	updateUserProfileAction
+} from './action';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import Articles from '../../components/articles/Articles';
 import { isUserLoggedIn } from '../../utils/commonMethods';
 import { addToFavoriteArticle, removeFromFavoriteArticle } from '../home/action';
+import { getUserDetailAction } from '../signin/action';
+
+const customStyles = {
+	content: {
+		top: '50%',
+		left: '50%',
+		right: 'auto',
+		bottom: 'auto',
+		marginRight: '-50%',
+		transform: 'translate(-50%, -50%)',
+		width: '400px'
+	}
+};
+
+Modal.setAppElement('#root');
 
 const Account = ({ history }) => {
+	const [ isModalOpen, setIsModalOpen ] = useState(false);
+	const [ userImageUrl, setUserImageUrl ] = useState('');
+	const [ userName, setUserName ] = useState('');
+	const [ userBio, setUserBio ] = useState('');
+	// const [ userEmail, setUserEmail ] = useState('');
+	const [ userPassword, setPassword ] = useState('');
+
 	const dispatch = useDispatch();
 	const userProfile = useSelector((state) => state.userProfile.user);
 	const username = useSelector((state) => state.signin.user.username);
 	const userArticles = useSelector((state) => state.userProfile.userArticles);
 	const favoriteArticles = useSelector((state) => state.userProfile.favroriteArticles);
 	const favoriteInProcess = useSelector((state) => state.home.favoriteInProcess);
+	const updatingProfile = useSelector((state) => state.userProfile.updatingProfile);
 
-	console.log('favoriteArticles', favoriteArticles);
+	useEffect(
+		() => {
+			if (!updatingProfile) {
+				dispatch(getUserDetailAction());
+				setIsModalOpen(false);
+				setPassword('');
+			}
+		},
+		[ updatingProfile ]
+	);
+
+	useEffect(
+		() => {
+			setUserImageUrl(userProfile.image ? userProfile.image : userProfile.image);
+			setUserBio(userProfile.bio ? userProfile.bio : '');
+			setUserName(userProfile.username ? userProfile.username : '');
+		},
+		[ userProfile ]
+	);
 
 	useEffect(
 		() => {
@@ -39,6 +86,21 @@ const Account = ({ history }) => {
 		},
 		[ favoriteInProcess ]
 	);
+
+	const onSubmit = (event) => {
+		event.preventDefault();
+
+		const requestBody = {
+			user: {
+				bio: userBio,
+				image: userImageUrl,
+				password: userPassword,
+				username: userName
+			}
+		};
+
+		dispatch(updateUserProfileAction(requestBody));
+	};
 
 	return (
 		<div>
@@ -75,7 +137,7 @@ const Account = ({ history }) => {
 									fill={PRIMARY}
 									xmlns="http://www.w3.org/2000/svg"
 									onClick={() => {
-										alert('WIP')
+										setIsModalOpen(true);
 									}}
 									style={{ cursor: 'pointer' }}
 								>
@@ -92,6 +154,7 @@ const Account = ({ history }) => {
 							</span>
 						</h1>
 					) : null}
+					{userProfile.image ? <p>{userProfile.bio}</p> : null}
 
 					{/* {article.author && (
 						<UserAvtar
@@ -144,6 +207,74 @@ const Account = ({ history }) => {
 					</TabPanel>
 				</Tabs>
 			</div>
+			<Modal
+				isOpen={isModalOpen}
+				style={customStyles}
+				onRequestClose={() => setIsModalOpen(false)}
+				// onAfterOpen={() => dispatch(getUserDetailAction())}
+			>
+				<form onSubmit={onSubmit} method="post">
+					<div className="text-center">
+						<h4>Your Settings</h4>
+					</div>
+
+					<div className="form-group">
+						<input
+							disabled={updatingProfile}
+							className="form-control"
+							placeholder="Profile picture url"
+							value={userImageUrl}
+							onChange={(event) => setUserImageUrl(event.target.value)}
+						/>
+					</div>
+					<div className="form-group">
+						<input
+							disabled={updatingProfile}
+							className="form-control"
+							placeholder="User Name"
+							value={userName}
+							onChange={(event) => setUserName(event.target.value)}
+						/>
+					</div>
+					<div className="form-group">
+						<textarea
+							disabled={updatingProfile}
+							className="form-control"
+							placeholder="Short Bio"
+							rows={4}
+							value={userBio}
+							onChange={(event) => setUserBio(event.target.value)}
+						/>
+					</div>
+					{/* <div className="form-group">
+						<input
+							className="form-control"
+							placeholder="Email"
+							value={userEmail}
+							onChange={(event) => setUserEmail(event.target.value)}
+						/>
+					</div> */}
+					<div className="form-group">
+						<input
+							disabled={updatingProfile}
+							type="password"
+							className="form-control"
+							placeholder="New Password"
+							value={userPassword}
+							onChange={(event) => setPassword(event.target.value)}
+							required={true}
+						/>
+					</div>
+					<div className="text-right">
+						<button typea="submit" className="btn" style={{ backgroundColor: PRIMARY, color: WHITESMOKE }}>
+							Submit
+						</button>
+						<button className="btn btn-warning ml-1" onClick={() => setIsModalOpen(false)}>
+							Close
+						</button>
+					</div>
+				</form>
+			</Modal>
 		</div>
 	);
 };

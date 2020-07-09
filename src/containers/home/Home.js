@@ -12,19 +12,21 @@ const Home = ({ history }) => {
 	const loadingTag = useSelector((state) => state.home.loadingTag);
 	const articles = useSelector((state) => state.home.articles);
 	const favoriteInProcess = useSelector((state) => state.home.favoriteInProcess);
-
+	const loadingArticles = useSelector((state) => state.home.loadingArticles);
 
 	useEffect(() => {
 		dispatch(getTagsAction());
 		// dispatch(getArticles());
 	}, []);
 
-	useEffect(() => {
-		if (!favoriteInProcess) {
-			dispatch(getArticles())
-		}
-	}, [favoriteInProcess]);
-
+	useEffect(
+		() => {
+			if (!favoriteInProcess) {
+				dispatch(getArticles());
+			}
+		},
+		[ favoriteInProcess ]
+	);
 
 	return (
 		<div>
@@ -33,15 +35,20 @@ const Home = ({ history }) => {
 				<div className="row">
 					<div className="col-md-9">
 						<Articles
+							loading={loadingArticles}
 							articles={articles}
 							history={history}
-							onFavoriteClick={isUserLoggedIn() ? (id, type) => {
-								if (type === 'add') {
-									dispatch(addToFavoriteArticle(id));
-								} else {
-									dispatch(removeFromFavoriteArticle(id));
-								}
-							} : null}
+							onFavoriteClick={
+								isUserLoggedIn() ? (
+									(id, type) => {
+										if (type === 'add') {
+											dispatch(addToFavoriteArticle(id));
+										} else {
+											dispatch(removeFromFavoriteArticle(id));
+										}
+									}
+								) : null
+							}
 						/>
 					</div>
 					<div className="col-md-3 p-3">

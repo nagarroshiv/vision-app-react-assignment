@@ -31,8 +31,8 @@ export default (state = initialState, { type, payload }) => {
 		case homeActionTypes.articles.REQUEST:
 			return {
 				...state,
-				loadingArticles: true
-				// articles: []
+				loadingArticles: true,
+				articles: []
 			};
 		case homeActionTypes.articles.SUCCESS:
 			return {

@@ -4,7 +4,8 @@ import {
 	userProfileActionTypes,
 	GET_USER_PROFILE_API_URL,
 	GET_USER_ARTICLES_API_URL,
-	GET_FAVORITE_ARTICLES_API_URL
+	GET_FAVORITE_ARTICLES_API_URL,
+	UPDATE_USER_PROFILE_API_URL
 } from '../constants';
 
 export const getUserProfileAction = (id) => {
@@ -51,6 +52,22 @@ export const getUserFavoriteArticlesAction = (username, limit = 5, offset = 0) =
 			})
 			.catch((error) => {
 				dispatch(actionCreator(userProfileActionTypes.favorite_articles.FAILURE));
+			});
+	};
+};
+
+export const updateUserProfileAction = (formData) => {
+	return (dispatch) => {
+		dispatch(actionCreator(userProfileActionTypes.update_profile.REQUEST));
+		axios
+			.put(UPDATE_USER_PROFILE_API_URL, formData, {
+				headers: jsonApiHeader(getAccessTokenFromLocalStorage(), 'application/json')
+			})
+			.then((response) => {
+				dispatch(actionCreator(userProfileActionTypes.update_profile.SUCCESS));
+			})
+			.catch((error) => {
+				dispatch(actionCreator(userProfileActionTypes.update_profile.FAILURE));
 			});
 	};
 };

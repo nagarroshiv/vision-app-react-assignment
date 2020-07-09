@@ -7,8 +7,6 @@ import { PRIMARY, WHITESMOKE } from '../../utils/colorConstants';
 const Signin = (props) => {
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
-	const [ emailError, setEmailError ] = useState(false);
-	const [ passwordError, setPasswordError ] = useState(false);
 
 	// REDUX
 	const dispatch = useDispatch();
@@ -25,24 +23,10 @@ const Signin = (props) => {
 			setEmail('');
 			setPassword('');
 		}
-		setEmailError(false);
-		setPasswordError(false);
 	};
 
 	const onSubmit = (event) => {
 		event.preventDefault();
-
-		// reset validation
-		resetForm();
-
-		// Validation
-		if (!email) {
-			setEmailError(true);
-		}
-
-		if (!password) {
-			setPasswordError(true);
-		}
 
 		if (!email || !password) {
 			return;
@@ -69,8 +53,9 @@ const Signin = (props) => {
 							className="form-control"
 							value={email}
 							onChange={(event) => setEmail(event.target.value)}
+							required={true}
+							type="email"
 						/>
-						{emailError && <div className="text-danger text-left font-size-14">Please enter email</div>}
 					</div>
 					<div className="form-group">
 						<input
@@ -79,10 +64,8 @@ const Signin = (props) => {
 							value={password}
 							type="password"
 							onChange={(event) => setPassword(event.target.value)}
+							required={true}
 						/>
-						{passwordError && (
-							<div className="text-danger text-left font-size-14">Please enter password</div>
-						)}
 					</div>
 					<p>
 						Need an account? <Link to="/signup">Signup</Link> | <Link to="/">Home</Link>

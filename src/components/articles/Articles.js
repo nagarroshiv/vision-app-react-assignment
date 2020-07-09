@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import UserAvtar from '../user-avtar/UserAvtar';
 import { isUserLoggedIn } from '../../utils/commonMethods';
 
-const Articles = ({ articles, history, onFavoriteClick }) => {
+const Articles = ({ articles, history, onFavoriteClick, loading }) => {
 	const getLimitedWords = (word) => {
 		return word.slice(0, 180);
 	};
@@ -13,6 +13,7 @@ const Articles = ({ articles, history, onFavoriteClick }) => {
 
 	return (
 		<div className="p-2">
+			{loading ? 'Loading articles ...' : null}
 			{articles.map((article, index) => {
 				return (
 					<div className="card mt-2" key={index}>
