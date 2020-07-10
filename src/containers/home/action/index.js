@@ -24,11 +24,11 @@ export const getTagsAction = () => {
 	};
 };
 
-export const getArticles = (limit, offset) => {
+export const getArticles = (limit, offset, tag) => {
 	return (dispatch) => {
 		dispatch(actionCreator(homeActionTypes.articles.REQUEST));
 		axios
-			.get(`${ARTICLES_API_URL}?limit=${limit ? limit : 10}&offset=${offset ? offset : 0}`, {
+			.get(`${ARTICLES_API_URL}?limit=${limit ? limit : 10}&offset=${offset ? offset : 0}&tag=${tag ? tag : ''}`, {
 				headers: jsonApiHeader(getAccessTokenFromLocalStorage(), 'application/json')
 			})
 			.then((response) => {

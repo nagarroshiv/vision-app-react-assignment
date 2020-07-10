@@ -7,6 +7,8 @@ import Articles from '../../components/articles/Articles';
 import { isUserLoggedIn } from '../../utils/commonMethods';
 
 const Home = ({ history, match }) => {
+	const tag = match.params.tag;
+
 	const dispatch = useDispatch();
 	const tags = useSelector((state) => state.home.tags);
 	const loadingTag = useSelector((state) => state.home.loadingTag);
@@ -22,15 +24,15 @@ const Home = ({ history, match }) => {
 	useEffect(
 		() => {
 			if (!favoriteInProcess) {
-				dispatch(getArticles());
+				dispatch(getArticles(10, 0, tag));
 			}
 		},
-		[ favoriteInProcess ]
+		[ favoriteInProcess, tag ]
 	);
 
 	return (
 		<div>
-			<Header history={history} match={match}/>
+			<Header history={history} match={match} />
 			<div className="container">
 				<div className="row">
 					<div className="col-md-9">

@@ -14,6 +14,7 @@ function App() {
 	return (
 		<BrowserRouter>
 			<Route path="/" exact component={Home} />
+			<Route path="/tag/:tag" exact component={Home} />
 			<Route path="/detail/:id" exact component={ArticleDetail} />
 			<Route path="/signin" exact component={Signin} />
 			<Route path="/signup" exact component={Signup} />

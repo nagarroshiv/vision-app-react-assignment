@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { SECONDARY, PRIMARY, WHITESMOKE } from '../../utils/colorConstants';
 
 const TagsBox = ({ tags, loading }) => {
@@ -13,7 +14,7 @@ const TagsBox = ({ tags, loading }) => {
 					style={{ backgroundColor: PRIMARY, color: WHITESMOKE }}
 					key={index}
 				>
-					{tag.toUpperCase()}
+					<Link style={{textDecoration: 'none', color: WHITESMOKE}} to={`/tag/${tag}`}>{tag.toUpperCase()}</Link>
 				</span>
 			))}
 		</div>
