@@ -60,7 +60,7 @@ const ArticleDetail = (props) => {
 
 	return (
 		<div>
-			<Header />
+			<Header history={props.history} match={props.match} />
 			<div
 				style={{
 					backgroundColor: SECONDARY,
@@ -85,7 +85,7 @@ const ArticleDetail = (props) => {
 									xmlns="http://www.w3.org/2000/svg"
 									style={{ cursor: 'pointer' }}
 									onClick={() => {
-										alert('WIP');
+										props.history.push(`/update/${articleId}`);
 									}}
 								>
 									<path

@@ -1,14 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PRIMARY, WHITESMOKE } from '../../utils/colorConstants';
+import { signupAction } from './action';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Signup = () => {
 	const [ userName, setUserName ] = useState('');
 	const [ email, setEmail ] = useState('');
 	const [ password, setPassword ] = useState('');
-	const [ userNameError, setUserNameError ] = useState(false);
-	const [ emailError, setEmailError ] = useState(false);
-	const [ passwordError, setPasswordError ] = useState(false);
+
+	const dispatch = useDispatch();
+	const loading = useSelector((state) => state.signup.loading);
+	const signupErrorMessage = useSelector((state) => state.signup.signupError);
+	const signupMessage = useSelector((state) => state.signup.signupMessage);
+
+	useEffect(
+		() => {
+			if (!loading) {
+				console.log('asjasjhsa');
+			}
+		},
+		[ loading ]
+	);
 
 	const resetForm = (type) => {
 		if (type === 'all') {
@@ -16,34 +29,20 @@ const Signup = () => {
 			setEmail('');
 			setPassword('');
 		}
-		setUserNameError(false);
-		setEmailError(false);
-		setPasswordError(false);
 	};
 
 	const onSubmit = (event) => {
 		event.preventDefault();
 
-		// Reset Validation
-		resetForm();
+		const requestBody = {
+			user: {
+				username: userName,
+				email: email,
+				password: password
+			}
+		};
 
-		// Validation
-		if (!userName) {
-			setUserNameError(true);
-		}
-		if (!email) {
-			setEmailError(true);
-		}
-
-		if (!password) {
-			setPasswordError(true);
-		}
-
-		if (!userName || !email || !password) {
-			return;
-		} else {
-			console.log('api call');
-		}
+		dispatch(signupAction(requestBody));
 	};
 
 	return (
@@ -54,47 +53,52 @@ const Signup = () => {
 				<form method="post" onSubmit={onSubmit}>
 					<div className="form-group">
 						<input
+							disabled={loading}
 							placeholder="Username"
 							className="form-control"
 							value={userName}
 							onChange={(event) => setUserName(event.target.value)}
+							required={true}
 						/>
-						{userNameError && (
-							<div className="text-danger text-left font-size-14">Please enter username</div>
-						)}
 					</div>
 
 					<div className="form-group">
 						<input
+							disabled={loading}
+							type="email"
 							placeholder="Email"
 							className="form-control"
 							value={email}
 							onChange={(event) => setEmail(event.target.value)}
+							required={true}
 						/>
-						{emailError && <div className="text-danger text-left font-size-14">Please enter email</div>}
 					</div>
 					<div className="form-group">
 						<input
+							min={8}
+							disabled={loading}
+							type="password"
 							placeholder="Password"
 							className="form-control"
 							value={password}
 							onChange={(event) => setPassword(event.target.value)}
+							required={true}
 						/>
-						{passwordError && (
-							<div className="text-danger text-left font-size-14">Please enter password</div>
-						)}
 					</div>
 					<p>
 						Already have an account? <Link to="/signin">Signin</Link> | <Link to="/">Home</Link>
 					</p>
 					<div className="text-center">
 						<input
+							disabled={loading}
 							type="submit"
 							className="btn"
 							value="Sign up"
 							style={{ backgroundColor: PRIMARY, color: WHITESMOKE }}
 						/>
 					</div>
+					<div className="text-danger" style={{textDecoration: 'capitalize'}}>{signupErrorMessage}</div>
+					<div className="text-success" >{signupMessage}</div>
 				</form>
 			</div>
 		</div>

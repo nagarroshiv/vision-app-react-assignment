@@ -30,7 +30,7 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-const Account = ({ history }) => {
+const Account = ({ history, match }) => {
 	const [ isModalOpen, setIsModalOpen ] = useState(false);
 	const [ userImageUrl, setUserImageUrl ] = useState('');
 	const [ userName, setUserName ] = useState('');
@@ -104,7 +104,7 @@ const Account = ({ history }) => {
 
 	return (
 		<div>
-			<Header />
+			<Header history={history} match={match}/>
 			<div
 				style={{
 					backgroundColor: SECONDARY,

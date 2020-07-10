@@ -6,9 +6,7 @@ export const signInAction = (data) => {
 	return (dispatch) => {
 		dispatch(actionCreator(signinActionTypes.signin.REQUEST));
 		axios
-			.post(SIGNIN_API_URL, data, {
-				headers: jsonApiHeader(getAccessTokenFromLocalStorage(), 'application/json')
-			})
+			.post(SIGNIN_API_URL, data)
 			.then((response) => {
 				localStorage.setItem('jwtToken', response.data.user.token)
 				dispatch(actionCreator(signinActionTypes.signin.SUCCESS, response.data.user));

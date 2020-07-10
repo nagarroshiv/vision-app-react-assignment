@@ -6,7 +6,7 @@ import TagsBox from '../../components/tagsBox/TagsBox';
 import Articles from '../../components/articles/Articles';
 import { isUserLoggedIn } from '../../utils/commonMethods';
 
-const Home = ({ history }) => {
+const Home = ({ history, match }) => {
 	const dispatch = useDispatch();
 	const tags = useSelector((state) => state.home.tags);
 	const loadingTag = useSelector((state) => state.home.loadingTag);
@@ -30,7 +30,7 @@ const Home = ({ history }) => {
 
 	return (
 		<div>
-			<Header />
+			<Header history={history} match={match}/>
 			<div className="container">
 				<div className="row">
 					<div className="col-md-9">

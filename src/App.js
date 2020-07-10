@@ -19,6 +19,7 @@ function App() {
 			<Route path="/signup" exact component={Signup} />
 			<Route path="/create" exact component={CreateArticle} />
 			<Route path="/account" exact component={Account} />
+			<Route path="/update/:id" exact component={CreateArticle} />
 		</BrowserRouter>
 	);
 }

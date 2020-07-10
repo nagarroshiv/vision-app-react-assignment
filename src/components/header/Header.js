@@ -5,7 +5,10 @@ import { isUserLoggedIn } from '../../utils/commonMethods';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUserDetailAction } from '../../containers/signin/action';
 
-const Header = () => {
+const Header = ({history, match}) => {
+
+	const id = match.params.id;
+
 	const loggedIn = isUserLoggedIn();
 
 	const dispatch = useDispatch();
@@ -17,13 +20,14 @@ const Header = () => {
 
 	const logout = () => {
 		localStorage.clear();
+		history.push('/')
 	};
 
 	return (
 		<nav className="navbar navbar-dark navbar-expand-lg" style={{ backgroundColor: PRIMARY }}>
-			<a className="navbar-brand" href="#">
+			<Link className="navbar-brand" to="/">
 				Vision
-			</a>
+			</Link>
 			<button
 				className="navbar-toggler"
 				type="button"

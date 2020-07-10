@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { signInAction } from './action/index';
 import { PRIMARY, WHITESMOKE } from '../../utils/colorConstants';
+import { isUserLoggedIn } from '../../utils/commonMethods';
 
 const Signin = (props) => {
 	const [ email, setEmail ] = useState('');
@@ -13,8 +14,9 @@ const Signin = (props) => {
 
 	// REDUX STATE
 	const signinData = useSelector((state) => state.signin);
+	const loading = useSelector(state => state.signin.loading);
 
-	if (signinData.loggedIn) {
+	if (signinData.loggedIn && isUserLoggedIn()) {
 		props.history.push('/');
 	}
 
@@ -55,6 +57,7 @@ const Signin = (props) => {
 							onChange={(event) => setEmail(event.target.value)}
 							required={true}
 							type="email"
+							disabled={loading}
 						/>
 					</div>
 					<div className="form-group">
@@ -65,6 +68,7 @@ const Signin = (props) => {
 							type="password"
 							onChange={(event) => setPassword(event.target.value)}
 							required={true}
+							disabled={loading}
 						/>
 					</div>
 					<p>
@@ -76,6 +80,7 @@ const Signin = (props) => {
 							className="btn"
 							value="Sign in"
 							style={{ backgroundColor: PRIMARY, color: WHITESMOKE }}
+							disabled={loading}
 						/>
 					</div>
 					<div className="text-danger">{signinData.signinErrorMessage}</div>
