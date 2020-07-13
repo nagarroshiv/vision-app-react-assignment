@@ -4,6 +4,8 @@ import { PRIMARY, WHITESMOKE } from '../../utils/colorConstants';
 import { useDispatch, useSelector } from 'react-redux';
 import { createArticleAction, updateArticleAction } from './action';
 import { getArticleDetailAction } from '../article-detail/action';
+import { actionCreator } from '../../utils/reduxUtils';
+import { createArticleActionTypes } from './constants';
 
 const CreateArticle = ({ history, match }) => {
 	const [ title, setTitle ] = useState('');
@@ -19,7 +21,6 @@ const CreateArticle = ({ history, match }) => {
 	const loadingCreateArticle = useSelector((state) => state.createArticle.loadingCreateArticle);
 	const articleDetail = useSelector((state) => state.articleDetail.article);
 
-	console.log('articleDetail', articleDetail);
 
 	useEffect(() => {
 		dispatch(getArticleDetailAction(articleId));
@@ -37,6 +38,7 @@ const CreateArticle = ({ history, match }) => {
 
 	if (article.slug) {
 		history.push(`/detail/${article.slug}`);
+		dispatch(actionCreator(createArticleActionTypes.createArticle.FAILURE));
 	}
 
 	const createArticle = (event) => {

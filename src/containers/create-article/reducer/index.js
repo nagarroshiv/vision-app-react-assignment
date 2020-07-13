@@ -10,7 +10,7 @@ export default (state = initialState, { type, payload }) => {
 		case createArticleActionTypes.createArticle.REQUEST:
 			return {
 				...state,
-				loadingCreateArticle: true
+				loadingCreateArticle: true,
 			};
 		case createArticleActionTypes.createArticle.SUCCESS:
 			return {
@@ -21,7 +21,8 @@ export default (state = initialState, { type, payload }) => {
 		case createArticleActionTypes.createArticle.FAILURE:
 			return {
 				...state,
-				loadingCreateArticle: false
+				loadingCreateArticle: false,
+				article: {}
 			};
 		default:
 			return state;
