@@ -32,7 +32,7 @@ export const getArticles = (limit, offset, tag) => {
 				headers: jsonApiHeader(getAccessTokenFromLocalStorage(), 'application/json')
 			})
 			.then((response) => {
-				dispatch(actionCreator(homeActionTypes.articles.SUCCESS, response.data.articles));
+				dispatch(actionCreator(homeActionTypes.articles.SUCCESS, response.data));
 			})
 			.catch((error) => {
 				dispatch(actionCreator(homeActionTypes.articles.FAILURE));

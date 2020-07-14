@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/header/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTagsAction, getArticles, addToFavoriteArticle, removeFromFavoriteArticle } from './action';
 import TagsBox from '../../components/tagsBox/TagsBox';
 import Articles from '../../components/articles/Articles';
 import { isUserLoggedIn } from '../../utils/commonMethods';
+import Pagination from '../../components/pagination/Pagination';
 
 const Home = ({ history, match }) => {
 	const tag = match.params.tag;
@@ -15,6 +16,9 @@ const Home = ({ history, match }) => {
 	const articles = useSelector((state) => state.home.articles);
 	const favoriteInProcess = useSelector((state) => state.home.favoriteInProcess);
 	const loadingArticles = useSelector((state) => state.home.loadingArticles);
+	const articleCount = useSelector((state) => state.home.articlesCount);
+
+	const [ offset, setOffset ] = useState(0);
 
 	useEffect(() => {
 		dispatch(getTagsAction());
@@ -24,11 +28,17 @@ const Home = ({ history, match }) => {
 	useEffect(
 		() => {
 			if (!favoriteInProcess) {
-				dispatch(getArticles(10, 0, tag));
+				dispatch(getArticles(10, offset, tag));
 			}
 		},
-		[ favoriteInProcess, tag ]
+		[ favoriteInProcess, tag, offset, dispatch ]
 	);
+
+	const changePageNumber = (page) => {
+		console.log('page, page', page);
+		const offset = (page - 1) * 10;
+		setOffset(offset);
+	};
 
 	return (
 		<div>
@@ -52,6 +62,7 @@ const Home = ({ history, match }) => {
 								) : null
 							}
 						/>
+						<Pagination totalCount={articleCount} changePageNumber={changePageNumber} />
 					</div>
 					<div className="col-md-3 p-3">
 						<TagsBox tags={tags} loading={loadingTag} history={history} />

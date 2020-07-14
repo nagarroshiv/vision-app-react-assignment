@@ -5,6 +5,7 @@ const initialState = {
 	tags: [],
 	loadingArticles: false,
 	articles: [],
+	articlesCount: 0,
 	favoriteInProcess: false
 };
 
@@ -38,7 +39,8 @@ export default (state = initialState, { type, payload }) => {
 			return {
 				...state,
 				loadingArticles: false,
-				articles: payload
+				articles: payload.articles,
+				articlesCount: payload.articlesCount
 			};
 		case homeActionTypes.articles.FAILURE:
 			return {

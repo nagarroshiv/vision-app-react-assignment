@@ -20,13 +20,6 @@ const Signin = (props) => {
 		props.history.push('/');
 	}
 
-	const resetForm = (type) => {
-		if (type === 'all') {
-			setEmail('');
-			setPassword('');
-		}
-	};
-
 	const onSubmit = (event) => {
 		event.preventDefault();
 
