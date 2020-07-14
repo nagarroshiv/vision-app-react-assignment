@@ -35,9 +35,7 @@ const Home = ({ history, match }) => {
 	);
 
 	const changePageNumber = (page) => {
-		console.log('page, page', page);
-		const offset = (page - 1) * 10;
-		setOffset(offset);
+		setOffset((page - 1) * 10);
 	};
 
 	return (

@@ -5,8 +5,10 @@ const initialState = {
 	user: {},
 	loadingUserArticles: false,
 	userArticles: [],
+	userArticlesCount: 0,
 	loadingFavortieArticles: false,
 	favroriteArticles: [],
+	favroriteArticlesCount: 0,
 	updatingProfile: false
 };
 
@@ -15,7 +17,7 @@ export default (state = initialState, { type, payload }) => {
 		case userProfileActionTypes.user_profile.REQUEST:
 			return {
 				...state,
-				loadingProfile: true,
+				loadingProfile: true
 				// user: {}
 			};
 		case userProfileActionTypes.user_profile.SUCCESS:
@@ -40,7 +42,8 @@ export default (state = initialState, { type, payload }) => {
 			return {
 				...state,
 				loadingUserArticles: false,
-				userArticles: payload
+				userArticles: payload.articles,
+				userArticlesCount: payload.articlesCount
 			};
 		case userProfileActionTypes.user_articles.FAILURE:
 			return {
@@ -58,7 +61,8 @@ export default (state = initialState, { type, payload }) => {
 			return {
 				...state,
 				loadingFavortieArticles: false,
-				favroriteArticles: payload
+				favroriteArticles: payload.articles,
+				favroriteArticlesCount: payload.articlesCount
 			};
 		case userProfileActionTypes.favorite_articles.FAILURE:
 			return {

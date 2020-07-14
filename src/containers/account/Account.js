@@ -15,6 +15,7 @@ import Articles from '../../components/articles/Articles';
 import { isUserLoggedIn } from '../../utils/commonMethods';
 import { addToFavoriteArticle, removeFromFavoriteArticle } from '../home/action';
 import { getUserDetailAction } from '../signin/action';
+import Pagination from '../../components/pagination/Pagination';
 
 const customStyles = {
 	content: {
@@ -45,6 +46,25 @@ const Account = ({ history, match }) => {
 	const favoriteArticles = useSelector((state) => state.userProfile.favroriteArticles);
 	const favoriteInProcess = useSelector((state) => state.home.favoriteInProcess);
 	const updatingProfile = useSelector((state) => state.userProfile.updatingProfile);
+	const userArticlesCount = useSelector((state) => state.userProfile.userArticlesCount);
+	const favroriteArticlesCount = useSelector((state) => state.userProfile.favroriteArticlesCount);
+
+	const [ userOffset, setUserOffset ] = useState(0);
+	const [ favoriteOffset, setUFavoriteOffset ] = useState(0);
+
+	useEffect(
+		() => {
+			dispatch(getUserArticlesAction(username, 5, userOffset));
+		},
+		[ userOffset ]
+	);
+
+	useEffect(
+		() => {
+			dispatch(getUserFavoriteArticlesAction(username, 5, favoriteOffset));
+		},
+		[ favoriteOffset ]
+	);
 
 	useEffect(
 		() => {
@@ -70,8 +90,8 @@ const Account = ({ history, match }) => {
 		() => {
 			if (username) {
 				dispatch(getUserProfileAction(username));
-				dispatch(getUserArticlesAction(username));
-				dispatch(getUserFavoriteArticlesAction(username));
+				dispatch(getUserArticlesAction(username, 5, userOffset));
+				dispatch(getUserFavoriteArticlesAction(username, 5, favoriteOffset));
 			}
 		},
 		[ username ]
@@ -102,9 +122,17 @@ const Account = ({ history, match }) => {
 		dispatch(updateUserProfileAction(requestBody));
 	};
 
+	const changePageNumberUserArticle = (pageNumber) => {
+		setUserOffset((pageNumber - 1) * 10);
+	};
+
+	const changePageNumberFavoriteArticle = (pageNumber) => {
+		setUFavoriteOffset((pageNumber - 1) * 10);
+	};
+
 	return (
 		<div>
-			<Header history={history} match={match}/>
+			<Header history={history} match={match} />
 			<div
 				style={{
 					backgroundColor: SECONDARY,
@@ -187,6 +215,7 @@ const Account = ({ history, match }) => {
 								) : null
 							}
 						/>
+						<Pagination totalCount={userArticlesCount} changePageNumber={changePageNumberUserArticle} />
 					</TabPanel>
 					<TabPanel>
 						<Articles
@@ -203,6 +232,10 @@ const Account = ({ history, match }) => {
 									}
 								) : null
 							}
+						/>
+						<Pagination
+							totalCount={favroriteArticlesCount}
+							changePageNumber={changePageNumberFavoriteArticle}
 						/>
 					</TabPanel>
 				</Tabs>

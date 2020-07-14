@@ -32,7 +32,7 @@ export const getUserArticlesAction = (username, limit = 5, offset = 0) => {
 				headers: jsonApiHeader(getAccessTokenFromLocalStorage(), 'application/json')
 			})
 			.then((response) => {
-				dispatch(actionCreator(userProfileActionTypes.user_articles.SUCCESS, response.data.articles));
+				dispatch(actionCreator(userProfileActionTypes.user_articles.SUCCESS, response.data));
 			})
 			.catch((error) => {
 				dispatch(actionCreator(userProfileActionTypes.user_articles.FAILURE));
@@ -48,7 +48,7 @@ export const getUserFavoriteArticlesAction = (username, limit = 5, offset = 0) =
 				headers: jsonApiHeader(getAccessTokenFromLocalStorage(), 'application/json')
 			})
 			.then((response) => {
-				dispatch(actionCreator(userProfileActionTypes.favorite_articles.SUCCESS, response.data.articles));
+				dispatch(actionCreator(userProfileActionTypes.favorite_articles.SUCCESS, response.data));
 			})
 			.catch((error) => {
 				dispatch(actionCreator(userProfileActionTypes.favorite_articles.FAILURE));
