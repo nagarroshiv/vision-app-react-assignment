@@ -7,7 +7,7 @@ import { getUserDetailAction } from '../../containers/signin/action';
 
 const Header = ({history, match}) => {
 
-	const id = match.params.id;
+	// const id = match.params.id;
 
 	const loggedIn = isUserLoggedIn();
 

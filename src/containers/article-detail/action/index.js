@@ -11,7 +11,6 @@ import {
 	DELETE_ARTICLE_API_URL
 } from '../constants';
 import axios from 'axios';
-import { act } from 'react-dom/test-utils';
 
 export const getArticleDetailAction = (id) => {
 	return (dispatch) => {
