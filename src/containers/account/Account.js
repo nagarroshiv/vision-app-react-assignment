@@ -215,7 +215,9 @@ const Account = ({ history, match }) => {
 								) : null
 							}
 						/>
-						<Pagination totalCount={userArticlesCount} changePageNumber={changePageNumberUserArticle} />
+						{userArticles.length ? (
+							<Pagination totalCount={userArticlesCount} changePageNumber={changePageNumberUserArticle} />
+						) : null}
 					</TabPanel>
 					<TabPanel>
 						<Articles
@@ -233,10 +235,12 @@ const Account = ({ history, match }) => {
 								) : null
 							}
 						/>
-						<Pagination
-							totalCount={favroriteArticlesCount}
-							changePageNumber={changePageNumberFavoriteArticle}
-						/>
+						{favoriteArticles.length ? (
+							<Pagination
+								totalCount={favroriteArticlesCount}
+								changePageNumber={changePageNumberFavoriteArticle}
+							/>
+						) : null}
 					</TabPanel>
 				</Tabs>
 			</div>

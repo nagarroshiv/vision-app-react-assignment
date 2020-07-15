@@ -16,6 +16,12 @@
  * Pagination on article listing
  * Search articles by tags
 
+## Bonus functionality also implemented
+ * Support of tags
+ * View articles of a particular tags
+ * Setting article as favorite
+ * Browse own favorite article
+
 ## Features available without signin
  
  * View articles
@@ -57,3 +63,4 @@
  - Run app - `npm start`
 
 Note: No edit comment api was not available on API doc.
+Note: This project created on latest version of React with hooks, no classed based components is used in the app.

@@ -60,7 +60,9 @@ const Home = ({ history, match }) => {
 								) : null
 							}
 						/>
-						<Pagination totalCount={articleCount} changePageNumber={changePageNumber} />
+						{articles.length ? (
+							<Pagination totalCount={articleCount} changePageNumber={changePageNumber} />
+						) : null}
 					</div>
 					<div className="col-md-3 p-3">
 						<TagsBox tags={tags} loading={loadingTag} history={history} />
