@@ -63,4 +63,5 @@
  - Run app - `npm start`
 
 Note: No edit comment api was not available on API doc.
-Note: This project created on latest version of React with hooks, no classed based components is used in the app.
+
+Note: This project created on latest version of React with hooks, no classed based components is used in the
