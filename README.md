@@ -53,7 +53,7 @@
 
 ## Steps to run app in local system
  - Clone repo into your system
- - Install dependencies - npm install
- - npm start
+ - Install dependencies - `npm install`
+ - Run app - `npm start`
 
 Note: No edit comment api was not available on API doc.
