@@ -4,7 +4,7 @@
 
  * User sign up
  * User sign in
- * View global articles
+ * View all users articles
  * View user articles
  * Create articles
  * Edit article
@@ -31,7 +31,7 @@
  * Edit own article
  * Delete own article
  * Delete own comment
- * Favorite article
+ * Add article as favorite
  * See list of favorite articles
  * Update profile
 
@@ -50,5 +50,10 @@
 ## Source code and deployement detail
  - Github url : https://github.com/nagarroshiv/vision-app-react-assignment
  - Deployed url : https://vision-assignment.netlify.app/ 
+
+## Steps to run app in local system
+ - Clone repo into your system
+ - Install dependencies - npm install
+ - npm start
 
 Note: No edit comment api was not available on API doc.

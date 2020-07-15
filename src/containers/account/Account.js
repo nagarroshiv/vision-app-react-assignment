@@ -29,7 +29,7 @@ const customStyles = {
 	}
 };
 
-Modal.setAppElement('#root');
+// Modal.setAppElement('#root');
 
 const Account = ({ history, match }) => {
 	const [ isModalOpen, setIsModalOpen ] = useState(false);
